@@ -1,6 +1,3 @@
-require 'metaname/original'
-#require 'byebug'
-
 describe Metaname::OriginalAPI do
   
   # The test and production log ons are different

@@ -87,7 +87,7 @@ module Metaname
 
           server             = Net::HTTP.new  url.host, url.port
           server.use_ssl     = "https" == url.scheme
-
+ 
           # Curious about this security skipping
           server.verify_mode = OpenSSL::SSL::VERIFY_NONE
           http_response      = server.request  http_request

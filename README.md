@@ -25,4 +25,12 @@ Verbose output for debugging use
 
 ```
 Metaname.debug = true
+
+# Debug the original request/response
+Metaname::StdoutTranscript.debug = true
 ```
+
+
+## TODO
+
+Add a timeout exception if something happens to the connection

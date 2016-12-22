@@ -1,10 +1,11 @@
 require "metaname/version"
+require "metaname/error"
 require "metaname/original"
 require "metaname/client"
 
 module Metaname
   
-  API_VERSION    = "1.2"
+  API_VERSION    = "1.1"
   PRODUCTION_URI = "https://metaname.net/api/#{API_VERSION}"
   TEST_URI       = "https://test.metaname.net/api/#{API_VERSION}"
   

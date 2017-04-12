@@ -13,6 +13,10 @@ module Metaname
       attr_accessor :debug
   end
 
+  def self.uri_for(env)
+    env == 'production' ? PRODUCTION_URI : TEST_URI
+  end
+
   def self.log(msg)
     puts "[D] #{msg}" if Metaname.debug
   end

@@ -87,7 +87,10 @@ module Metaname
 
           server             = Net::HTTP.new  url.host, url.port
           server.use_ssl     = "https" == url.scheme
- 
+  
+          StdoutTranscript.log("server=#{server.inspect}")
+          #StdoutTranscript.log("use_ssl=#{server.use_ssl}")
+
           # Curious about this security skipping
           server.verify_mode = OpenSSL::SSL::VERIFY_NONE
           http_response      = server.request  http_request
@@ -141,11 +144,15 @@ module Metaname
         @remote = JsonRpc::Client.new  params[:uri]
         @account_reference = params[:account][:reference]
         @api_key =           params[:account][:api_key]
+
+        raise 'No URI' if @remote.nil?
+        raise 'No reference' if @account_reference.nil?
+        raise 'No api_key URI' if @api_key.nil?
       end
 
       def method_missing method_name, *args
         args.unshift @account_reference, @api_key
-        @remote.invoke_method  method_name, *args
+        @remote.invoke_method method_name, *args
       end
 
     end # of class methods

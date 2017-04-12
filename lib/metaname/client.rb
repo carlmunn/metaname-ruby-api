@@ -129,7 +129,7 @@ module Metaname
 
     # The original will raise an exception for exceptions and bad user input.
     # Exception for user input isn't what we need, we'll like the user to correct
-    # them selves or know what went wrong.
+    # themselves or know what went wrong.
     def catch_error
       result = begin
         {result: yield}
@@ -139,7 +139,7 @@ module Metaname
         
         error.raise! if error.important?
 
-        {result: nil, exception: exp, error:  error.message}
+        error.to_hash
       end
 
       log("RESPONSE: #{result.inspect}")

@@ -88,6 +88,18 @@ describe Metaname do
       end
     end
 
+    context 'exceptions' do
+      
+      it 'return a exception in hash form' do
+
+        _exp = Metaname::JsonRpc::Error.new(5, 'invalid value')
+        Metaname::OriginalAPI.stub(:method_missing).and_raise(_exp)
+        
+        _error = @client.request(:raise_me!)[:error]
+        expect(_error).to eql "invalid value"
+      end
+    end
+
     it 'tests #domains' do
       skip "seems this just does the same as #domain"
       result = @client.domains

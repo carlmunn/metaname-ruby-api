@@ -47,7 +47,7 @@ module Metaname
     end
 
     def message
-      "#{@exception.message}, #{@exception.data}"
+      [@exception.message, @exception.data].reject{ |v| _blank?(v) }.join(', ')
     end
 
     # re-raise
@@ -66,6 +66,15 @@ module Metaname
 
     def code
       @exception.code.abs
+    end
+
+    def to_hash
+      {result: nil, exception: self, error:  self.message, code: self.code}
+    end
+
+  private
+    def _blank?(val)
+      [nil, ""].include?(val)
     end
   end
 end

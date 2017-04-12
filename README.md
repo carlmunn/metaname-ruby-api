@@ -8,9 +8,14 @@ The Gem also tests by faking the HTTP responses (RSpec)
 
 [Metaname API link](https://metaname.net/api)
 
-## Useage
+## About the Metaname service
 
-```
+[Metaname](https://metaname.net/) is a service that offers the ability to purchase domain names using their API.
+More information can be found at their website
+
+## Usage
+
+```ruby
 options = {
     uri: Metaname::TEST_URI,
     account: {reference: STRING, api_key: STRING}
@@ -23,14 +28,21 @@ client.request(:account_balance)
 
 Verbose output for debugging use
 
-```
+```ruby
 Metaname.debug = true
 
 # Debug the original request/response
 Metaname::StdoutTranscript.debug = true
 ```
 
+## Tests
+
+I've written tests based on intercepting HTTP communication from their test version API. As the results are hard coded the gem
+won't pick up any issues if their API changes.
+
+When testing I had to get Neil Stockbridge from Metaname support (support@metaname.co.nz) to add credit on the test account for me.
 
 ## TODO
 
-Add a timeout exception if something happens to the connection
+Add a time out exception if something happens to the connection
+

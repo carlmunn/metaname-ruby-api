@@ -7,8 +7,11 @@ module Metaname
     # For quick testing
     def self.test_client
       Metaname::Client.new({
-        uri:     Metaname::TEST_URI,
-        account: {reference: "xqd7", api_key: "97dV0cIUUjoDkoG7QnhoRWFFVWL3tHQNWh7AH5U94kpulkyJ"}
+        uri: Metaname::TEST_URI,
+        account: {
+          reference: "xqd7",
+          api_key:   "97dV0cIUUjoDkoG7QnhoRWFFVWL3tHQNWh7AH5U94kpulkyJ"
+        }
       })
     end
 
@@ -75,7 +78,7 @@ module Metaname
     #   local_number: "123 456"
     # fax_number: null  # Optional
 
-    # contact strcuture (optional if default set):
+    # contact structure (optional if default set):
     # {admin: {CONTACT...}, registrant: {CONTACT...}, technical: {CONTACT...}}
     #
     # name_servers structure:
@@ -95,10 +98,33 @@ module Metaname
       Metaname.log(*args)
     end
 
-    # This will still raise an error. Here to show the stucture
+    # This will still raise an error. Here to show the structure
     def default_contacts
-      # {admin: {}, registrant: {}, technical: {}}
+      #{admin: default_contact, registrant: default_contact, technical: default_contact}
       {}
+    end
+
+    # Use for debugging or just checking what the structure is
+    def default_contact
+      {
+        name: 'Carl Munn',
+        email_address: 'carl.munn@open2view.com',
+        organisation_name: 'Open2view',
+        postal_address: {
+          line1: '505 Rosebank road',
+          line2: '',
+          city: 'Auckland',
+          region: 'Avondale',
+          postal_code: '1026',
+          country_code: 'nz'
+        },
+        phone_number: {
+          country_code: '64',
+          area_code: '09',
+          local_number: '8460220'
+        },
+        fax_number: nil
+      }
     end
 
     # The original will raise an exception for exceptions and bad user input.

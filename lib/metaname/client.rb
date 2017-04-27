@@ -1,7 +1,7 @@
 module Metaname
   class Client
     class << self
-      attr_accessor :initialized
+      attr_accessor :initialized, :intercepter
     end
 
     # For quick testing
@@ -34,14 +34,21 @@ module Metaname
     # recommended but if a method is missing use this one.
     #
     # The specific methods use ruby keyword parameters and interpret the results
+    #
+    # intercepter is used to catch and return, helpful for developing and not keep
+    # calling on metaname's API
     def request(_method, *args)
       catch_error do
-        Metaname::OriginalAPI.method_missing(_method, *args)
+        if self.class.intercepter
+          self.class.intercepter.call(_method, *args)
+        else
+          Metaname::OriginalAPI.method_missing(_method, *args)
+        end
       end
     end
 
     def balance
-      request(:account_balance)
+      request(:account_balance)[:result]
     end
 
     def domains
@@ -85,7 +92,7 @@ module Metaname
     # {name: '', ip4_address: '114.23.246.97', ip6_address: ''}
     #
     def register(domain: nil, term: nil, contacts: default_contacts, name_servers: nil)
-      request(:register_domain_name, domain, term, contacts, name_servers)
+      request(:register_domain_name, domain, term.to_i, contacts, name_servers)
     end
 
     def renew(domain: nil, term: nil)
@@ -137,7 +144,10 @@ module Metaname
 
         error = Metaname::ResponseError.new(exp)
         
-        error.raise! if error.important?
+        if error.important?
+          log("Exception is important, raising")
+          error.raise!
+        end
 
         error.to_hash
       end

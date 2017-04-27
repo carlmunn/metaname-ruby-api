@@ -57,11 +57,13 @@ module Metaname
 
     # The number range supplied is user error the rest isn't'
     def important?
-      !(5..21).include?(code) || zero_balance?
+      !safe_error_codes.include?(code)
     end
 
-    def zero_balance?
-      code == 11
+    # 11 = zerp balance
+    # 99 = domain already taken
+    def safe_error_codes
+      (4..21).to_a + [99] - [11]
     end
 
     def code
@@ -69,7 +71,7 @@ module Metaname
     end
 
     def to_hash
-      {result: nil, exception: self, error:  self.message, code: self.code}
+      {result: nil, exception: self.inspect, error:  self.message, code: self.code}
     end
 
   private

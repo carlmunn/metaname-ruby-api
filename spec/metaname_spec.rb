@@ -26,7 +26,7 @@ describe Metaname do
 
     it 'tests the balance check' do
       stub_req("result": "0.00")
-      expect(@client.balance[:result]).to eql "0.00"
+      expect(@client.balance).to eql "0.00"
     end
 
     context 'registering' do
@@ -69,9 +69,8 @@ describe Metaname do
           "message": "test-already-exists.co.nz cannot be registered because it is already registered"
         })
 
-        raised_error("test-already-exists.co.nz cannot be registered because it is already registered") do
-          @client.register(domain: 'test-already-exists.co.nz', term: 1)
-        end
+        result = @client.register(domain: 'test-already-exists.co.nz', term: 1)
+        expect(result[:error]).to eql "test-already-exists.co.nz cannot be registered because it is already registered"
       end
 
       # Test test.nz is valid but their system doesn't support it by the looks
@@ -100,6 +99,20 @@ describe Metaname do
       end
     end
 
+    context 'intercept' do
+
+      it 'checks balance interception' do
+
+        Metaname::Client.intercepter = ->(*args){
+          'intercept-testing'
+        }
+
+        expect(@client.balance).to eql 'intercept-testing'
+
+        Metaname::Client.intercepter = nil
+      end
+    end
+    
     it 'tests #domains' do
       skip "seems this just does the same as #domain"
       result = @client.domains

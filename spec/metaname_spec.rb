@@ -103,13 +103,13 @@ describe Metaname do
 
       it 'checks balance interception' do
 
-        Metaname::Client.intercepter = ->(*args){
+        Metaname::Client.interceptor = ->(*args){
           'intercept-testing'
         }
 
         expect(@client.balance).to eql 'intercept-testing'
 
-        Metaname::Client.intercepter = nil
+        Metaname::Client.interceptor = nil
       end
     end
     

@@ -1,7 +1,7 @@
 module Metaname
   class Client
     class << self
-      attr_accessor :initialized, :intercepter
+      attr_accessor :initialized, :interceptor
     end
 
     # For quick testing
@@ -35,12 +35,12 @@ module Metaname
     #
     # The specific methods use ruby keyword parameters and interpret the results
     #
-    # intercepter is used to catch and return, helpful for developing and not keep
+    # interceptor is used to catch and return, helpful for developing and not keep
     # calling on metaname's API
     def request(_method, *args)
       catch_error do
-        if self.class.intercepter
-          self.class.intercepter.call(_method, *args)
+        if self.class.interceptor
+          self.class.interceptor.call(_method, *args)
         else
           Metaname::OriginalAPI.method_missing(_method, *args)
         end

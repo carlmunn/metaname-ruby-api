@@ -46,4 +46,4 @@ When testing I had to get Neil Stockbridge from Metaname support (support@metana
 
 Add a time out exception if something happens to the connection
 
-interceptor doc
+Interceptor, would make development easier

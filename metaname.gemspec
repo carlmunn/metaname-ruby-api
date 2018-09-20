@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "metaname"
   spec.version       = Metaname::VERSION
   spec.authors       = ["Carl Munn"]
-  spec.email         = ["***REMOVED***"]
+  spec.email         = ["github@carlmunn.com"]
 
   spec.summary       = %q{API for Metaname}
   spec.description   = %q{Wrapper for Metaname API, their original one was just simple ruby code. Wanted a gems version}
